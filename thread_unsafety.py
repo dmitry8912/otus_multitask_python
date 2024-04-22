@@ -8,13 +8,14 @@ l = [1, 2, 3, 4, 5, 6]
 def mutator():
     while True:
         index = random.Random().randint(0, len(l) - 1)
-        l[index] += random.Random().randint(0, 10)
+        l[index] += 1 if l[index] % 2 != 0 else -1
 
 
 def reader():
     while True:
         index = random.Random().randint(0, len(l) - 1)
         if l[index] % 2 == 0:
+            print("Element is odd")
             if l[index] % 2 != 0:
                 print("Element is odd and even!")
 
