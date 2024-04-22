@@ -14,23 +14,27 @@ class Worker:
 
     @staticmethod
     def sync_io_task(*args, **kwargs):
-        response = requests.get("https://google.com")
-        return len(response.content)
+        for _ in range(10):
+            response = requests.get("https://google.com")
+        return random.Random().randint(0,100)
 
     @staticmethod
     async def async_io_task(*args, **kwargs):
-        response = await httpx.AsyncClient().get(url="https://google.com")
-        return len(response.content)
+        for _ in range(10):
+            response = await httpx.AsyncClient().get(url="https://google.com")
+        return random.Random().randint(0,100)
 
     @staticmethod
     def cpu_task(*args, **kwargs):
-        with open("for_hash.txt", "rb") as f:
-            return hashlib.sha1(f.read()).hexdigest()
+        for i in range(10):
+            cpu_tr = 64**64**4
+
+        return random.Random().randint(0,100)
 
     @staticmethod
     def run_sync(*args, **kwargs):
         print(f"Process {os.getpid()}, Thread {threading.get_native_id()}\n")
-        return Worker.cpu_task()
+        return Worker.sync_io_task()
         # for _ in tqdm.tqdm(range(10)):
         #     time.sleep(1)
         #
@@ -39,7 +43,7 @@ class Worker:
     @staticmethod
     async def run_async():
         print(f"Process {os.getpid()}, Thread {threading.get_native_id()}")
-        return Worker.cpu_task()
+        return await Worker.async_io_task()
         # for _ in tqdm.tqdm(range(10)):
         #     await asyncio.sleep(1)
         #
